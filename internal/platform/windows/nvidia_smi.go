@@ -82,14 +82,15 @@ func encodeGPURows(rows [][]string) ([]byte, error) {
 
 func appendGPU(families map[string]*dto.MetricFamily, row []string) error {
 	labels := gpuLabels(row[0], row[1], row[2])
-	for index, descriptor := range gpuMetricDescriptors {
-		value, err := strconv.ParseFloat(strings.TrimSpace(row[index+3]), 64)
+	for _, descriptor := range gpuMetricDescriptors {
+		value, err := strconv.ParseFloat(strings.TrimSpace(row[descriptor.field+3]), 64)
 		if err != nil {
 			return fmt.Errorf("parse %s: %w", descriptor.name, err)
 		}
 		value *= descriptor.scale
 		families[descriptor.name].Metric = append(families[descriptor.name].Metric, gaugeMetric(labels, value))
 	}
+	families["nvidia_smi_gpu_info"].Metric = append(families["nvidia_smi_gpu_info"].Metric, gaugeMetric(labels, 1))
 	return nil
 }
 

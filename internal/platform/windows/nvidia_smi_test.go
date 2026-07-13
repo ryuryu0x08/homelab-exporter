@@ -31,6 +31,8 @@ func TestNVIDIAScraperExportsGPUValues(t *testing.T) {
 		`homelab_nvidia_gpu_utilization_ratio{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 0.07`,
 		`homelab_nvidia_gpu_memory_used_bytes{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 8.454668288e+09`,
 		`homelab_nvidia_gpu_temperature_celsius{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 36`,
+		`nvidia_smi_utilization_gpu_ratio{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 0.07`,
+		`nvidia_smi_gpu_info{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 1`,
 	} {
 		if !strings.Contains(text, expected) {
 			t.Fatalf("output missing %q:\n%s", expected, text)
