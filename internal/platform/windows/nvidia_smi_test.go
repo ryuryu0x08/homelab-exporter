@@ -19,7 +19,7 @@ func (f fakeRunner) Run(context.Context, string, ...string) ([]byte, error) {
 }
 
 func TestNVIDIAScraperExportsGPUValues(t *testing.T) {
-	output := "0, GPU-one, NVIDIA GeForce RTX 5060 Ti, 7, 11, 16311, 8063, 8248, 36, 17.5, 180, 240, 405\n"
+	output := "0, GPU-one, NVIDIA GeForce RTX 5060 Ti, 7, 11, 16311, 8063, 8248, 36, 17.5, 180, 240, 405, 45\n"
 	scraper := newNVIDIASMIScraper(fakeRunner{output: []byte(output)})
 
 	body, err := scraper.Scrape(context.Background(), config.Source{Kind: config.SourceKindNVIDIASMI})
@@ -33,6 +33,7 @@ func TestNVIDIAScraperExportsGPUValues(t *testing.T) {
 		`homelab_nvidia_gpu_temperature_celsius{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 36`,
 		`nvidia_smi_utilization_gpu_ratio{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 0.07`,
 		`nvidia_smi_gpu_info{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 1`,
+		`nvidia_smi_fan_speed_ratio{gpu="0",name="NVIDIA GeForce RTX 5060 Ti",uuid="GPU-one"} 0.45`,
 	} {
 		if !strings.Contains(text, expected) {
 			t.Fatalf("output missing %q:\n%s", expected, text)

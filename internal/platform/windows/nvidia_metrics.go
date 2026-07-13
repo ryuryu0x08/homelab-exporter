@@ -27,6 +27,7 @@ var gpuMetricDescriptors = []gpuMetricDescriptor{
 	{name: "homelab_nvidia_gpu_power_limit_watts", help: "Configured GPU power limit in watts.", scale: 1, field: 7},
 	{name: "homelab_nvidia_gpu_graphics_clock_hertz", help: "Current GPU graphics clock in hertz.", scale: megahertzScale, field: 8},
 	{name: "homelab_nvidia_gpu_memory_clock_hertz", help: "Current GPU memory clock in hertz.", scale: megahertzScale, field: 9},
+	{name: "homelab_nvidia_gpu_fan_speed_ratio", help: "Current GPU fan speed ratio.", scale: 1 / float64(percentScale), field: 10},
 	{name: "nvidia_smi_utilization_gpu_ratio", help: "Current GPU compute utilization ratio.", scale: 1 / float64(percentScale), field: 0},
 	{name: "nvidia_smi_utilization_memory_ratio", help: "Current GPU memory controller utilization ratio.", scale: 1 / float64(percentScale), field: 1},
 	{name: "nvidia_smi_memory_total_bytes", help: "Total GPU memory in bytes.", scale: mebibyteBytes, field: 2},
@@ -37,6 +38,7 @@ var gpuMetricDescriptors = []gpuMetricDescriptor{
 	{name: "nvidia_smi_power_default_limit_watts", help: "Configured GPU power limit in watts.", scale: 1, field: 7},
 	{name: "nvidia_smi_clocks_current_graphics_clock_hz", help: "Current GPU graphics clock in hertz.", scale: megahertzScale, field: 8},
 	{name: "nvidia_smi_clocks_current_memory_clock_hz", help: "Current GPU memory clock in hertz.", scale: megahertzScale, field: 9},
+	{name: "nvidia_smi_fan_speed_ratio", help: "Current GPU fan speed ratio.", scale: 1 / float64(percentScale), field: 10},
 }
 
 func newGPUFamilies() map[string]*dto.MetricFamily {

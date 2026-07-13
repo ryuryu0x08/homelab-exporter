@@ -15,9 +15,9 @@ import (
 
 const (
 	nvidiaSMIExecutable = "nvidia-smi.exe"
-	queryArgument       = "--query-gpu=index,uuid,name,utilization.gpu,utilization.memory,memory.total,memory.used,memory.free,temperature.gpu,power.draw,power.limit,clocks.current.graphics,clocks.current.memory"
+	queryArgument       = "--query-gpu=index,uuid,name,utilization.gpu,utilization.memory,memory.total,memory.used,memory.free,temperature.gpu,power.draw,power.limit,clocks.current.graphics,clocks.current.memory,fan.speed"
 	formatArgument      = "--format=csv,noheader,nounits"
-	nvidiaFieldCount    = 13
+	nvidiaFieldCount    = 14
 	percentScale        = 100
 	mebibyteBytes       = 1024 * 1024
 	megahertzScale      = 1000 * 1000
