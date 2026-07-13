@@ -17,6 +17,7 @@ import (
 	"github.com/ryuryu0x08/homelab-exporter/internal/app"
 	"github.com/ryuryu0x08/homelab-exporter/internal/config"
 	"github.com/ryuryu0x08/homelab-exporter/internal/platform"
+	"github.com/ryuryu0x08/homelab-exporter/internal/platform/windows"
 	"github.com/ryuryu0x08/homelab-exporter/internal/server"
 )
 
@@ -57,7 +58,9 @@ func run(arguments []string, logger *log.Logger) error {
 	transport := http.DefaultTransport.(*http.Transport).Clone()
 	transport.Proxy = nil
 	client := &http.Client{Transport: transport}
-	scraper := aggregate.NewHTTPScraper(client, runtimeConfig.MaxBodyBytes)
+	httpScraper := aggregate.NewHTTPScraper(client, runtimeConfig.MaxBodyBytes)
+	nvidiaSMIScraper := windows.NewNVIDIASMIScraper()
+	scraper := aggregate.NewRoutedScraper(httpScraper, nvidiaSMIScraper)
 	aggregator := aggregate.New(scraper, logger)
 	service := app.NewService(aggregator, runtimeConfig.Sources, runtimeConfig.ScrapeTimeout)
 	httpServer := &http.Server{

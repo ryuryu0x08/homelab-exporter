@@ -20,6 +20,7 @@ type rawConfig struct {
 
 type rawSource struct {
 	Name       string     `toml:"name"`
+	Kind       SourceKind `toml:"kind"`
 	URL        string     `toml:"url"`
 	Dependency Dependency `toml:"dependency"`
 }
@@ -45,8 +46,12 @@ func Parse(data []byte) (*Config, error) {
 		Sources:       make([]Source, 0, len(raw.Sources)),
 	}
 	for _, source := range raw.Sources {
+		if source.Kind == "" {
+			source.Kind = SourceKindHTTP
+		}
 		config.Sources = append(config.Sources, Source{
 			Name:       strings.TrimSpace(source.Name),
+			Kind:       source.Kind,
 			URL:        strings.TrimSpace(source.URL),
 			Dependency: source.Dependency,
 		})
@@ -98,6 +103,15 @@ func validateSource(source Source, seen map[string]struct{}) error {
 	}
 	if source.Dependency != DependencyOptional && source.Dependency != DependencyRequired {
 		return fmt.Errorf("dependency %q is invalid", source.Dependency)
+	}
+	if source.Kind == SourceKindNVIDIASMI {
+		if source.URL != "" {
+			return errors.New("nvidia_smi source URL must be empty")
+		}
+		return nil
+	}
+	if source.Kind != SourceKindHTTP {
+		return fmt.Errorf("source kind %q is invalid", source.Kind)
 	}
 	parsedURL, err := url.ParseRequestURI(source.URL)
 	if err != nil {

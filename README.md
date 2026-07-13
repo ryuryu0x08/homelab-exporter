@@ -11,6 +11,7 @@ Only Windows is supported in the current release. Platform validation is explici
 - `homelab_exporter_source_up{source="..."}` reports whether each source was scraped, parsed, and merged successfully.
 - `homelab_exporter_source_scrape_duration_seconds{source="..."}` reports local scrape duration.
 - A metric-family type or help conflict fails that source instead of silently producing invalid exposition.
+- On Windows, NVIDIA GPU metrics are collected directly through `nvidia-smi`; no separate NVIDIA exporter process is required.
 - `/healthz` reports gateway process health; `/metrics` performs live fan-out.
 
 ## Run

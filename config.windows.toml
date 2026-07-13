@@ -5,25 +5,29 @@ max_body_bytes = 8388608
 
 [[source]]
 name = "windows"
+kind = "http"
 url = "http://127.0.0.1:9182/metrics"
 dependency = "required"
 
 [[source]]
 name = "resarb"
+kind = "http"
 url = "http://127.0.0.1:8080/metrics"
 dependency = "required"
 
 [[source]]
 name = "llama_swap"
+kind = "http"
 url = "http://127.0.0.1:11434/metrics"
 dependency = "required"
 
 [[source]]
 name = "llama_server"
+kind = "http"
 url = "http://127.0.0.1:9001/metrics"
 dependency = "optional"
 
 [[source]]
 name = "nvidia_gpu"
-url = "http://127.0.0.1:9835/metrics"
-dependency = "optional"
+kind = "nvidia_smi"
+dependency = "required"

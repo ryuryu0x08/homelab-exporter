@@ -17,9 +17,18 @@ const (
 	DependencyRequired Dependency = "required"
 )
 
+// SourceKind identifies how a metric source is collected.
+type SourceKind string
+
+const (
+	SourceKindHTTP      SourceKind = "http"
+	SourceKindNVIDIASMI SourceKind = "nvidia_smi"
+)
+
 // Source describes one local Prometheus exposition endpoint.
 type Source struct {
 	Name       string
+	Kind       SourceKind
 	URL        string
 	Dependency Dependency
 }

@@ -15,6 +15,7 @@ max_body_bytes = 10485760
 
 [[source]]
 name = "windows"
+kind = "http"
 url = "http://127.0.0.1:9182/metrics"
 dependency = "required"
 `
@@ -28,6 +29,27 @@ dependency = "required"
 	}
 	if config.ScrapeTimeout != 5*time.Second {
 		t.Fatalf("timeout=%s, want 5s", config.ScrapeTimeout)
+	}
+}
+
+func TestParseNVIDIASMISourceWithoutURL(t *testing.T) {
+	raw := `
+platform = "windows"
+listen = ":9836"
+scrape_timeout = "5s"
+max_body_bytes = 1024
+[[source]]
+name = "nvidia_gpu"
+kind = "nvidia_smi"
+dependency = "required"
+`
+
+	parsed, err := Parse([]byte(raw))
+	if err != nil {
+		t.Fatalf("Parse() error=%v", err)
+	}
+	if parsed.Sources[0].Kind != SourceKindNVIDIASMI {
+		t.Fatalf("kind=%q, want nvidia_smi", parsed.Sources[0].Kind)
 	}
 }
 
