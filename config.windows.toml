@@ -1,0 +1,29 @@
+platform = "windows"
+listen = ":9836"
+scrape_timeout = "10s"
+max_body_bytes = 8388608
+
+[[source]]
+name = "windows"
+url = "http://127.0.0.1:9182/metrics"
+dependency = "required"
+
+[[source]]
+name = "resarb"
+url = "http://127.0.0.1:8080/metrics"
+dependency = "required"
+
+[[source]]
+name = "llama_swap"
+url = "http://127.0.0.1:11434/metrics"
+dependency = "required"
+
+[[source]]
+name = "llama_server"
+url = "http://127.0.0.1:9001/metrics"
+dependency = "optional"
+
+[[source]]
+name = "nvidia_gpu"
+url = "http://127.0.0.1:9835/metrics"
+dependency = "optional"
